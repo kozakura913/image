@@ -298,9 +298,9 @@ impl<R: BufRead + Seek> ImageDecoder for IcoDecoder<R> {
 
                 // Embedded PNG images can only be of the 32BPP RGBA format.
                 // https://blogs.msdn.microsoft.com/oldnewthing/20101022-00/?p=12473/
-                if decoder.color_type() != ColorType::Rgba8 {
-                    return Err(DecoderError::PngNotRgba.into());
-                }
+                //if decoder.color_type() != ColorType::Rgba8 {
+                //    return Err(DecoderError::PngNotRgba.into());
+                //}
 
                 decoder.read_image(buf)
             }
