@@ -25,7 +25,7 @@ enum DecoderError {
     /// The entry is in PNG format and specified a length that is shorter than PNG header.
     PngShorterThanHeader,
     /// The enclosed PNG is not in RGBA, which is invalid: <https://blogs.msdn.microsoft.com/oldnewthing/20101022-00/?p=12473>/.
-    PngNotRgba,
+    //PngNotRgba,
 
     /// The entry is in BMP format and specified a data size that is not correct for the image and optional mask data.
     InvalidDataSize,
@@ -54,7 +54,7 @@ impl fmt::Display for DecoderError {
             DecoderError::PngShorterThanHeader => {
                 f.write_str("Entry specified a length that is shorter than PNG header!")
             }
-            DecoderError::PngNotRgba => f.write_str("The PNG is not in RGBA format!"),
+            //DecoderError::PngNotRgba => f.write_str("The PNG is not in RGBA format!"),
             DecoderError::InvalidDataSize => {
                 f.write_str("ICO image data size did not match expected size")
             }
@@ -298,9 +298,9 @@ impl<R: BufRead + Seek> ImageDecoder for IcoDecoder<R> {
 
                 // Embedded PNG images can only be of the 32BPP RGBA format.
                 // https://blogs.msdn.microsoft.com/oldnewthing/20101022-00/?p=12473/
-                if decoder.color_type() != ColorType::Rgba8 {
-                    return Err(DecoderError::PngNotRgba.into());
-                }
+                //if decoder.color_type() != ColorType::Rgba8 {
+                //    return Err(DecoderError::PngNotRgba.into());
+                //}
 
                 decoder.read_image(buf)
             }
