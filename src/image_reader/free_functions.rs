@@ -158,6 +158,11 @@ static MAGIC_BYTES: [(&[u8], ImageFormat); 25] = [
 /// TGA is not supported by this function.
 /// This is not to be trusted on the validity of the whole memory block
 pub fn guess_format(buffer: &[u8]) -> ImageResult<ImageFormat> {
+    if buffer.len()>4{
+        if buffer[4..].starts_with(b"ftypheic"){
+            return Ok(ImageFormat::Heif);
+        }
+    }
     match guess_format_impl(buffer) {
         Some(format) => Ok(format),
         None => Err(ImageError::Unsupported(ImageFormatHint::Unknown.into())),

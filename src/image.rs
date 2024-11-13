@@ -73,6 +73,9 @@ pub enum ImageFormat {
 
     /// An Image in PCX Format
     Pcx,
+
+    /// An Image in HEIF Format
+    Heif,
 }
 
 impl ImageFormat {
@@ -112,6 +115,7 @@ impl ImageFormat {
                 "ff" => ImageFormat::Farbfeld,
                 "qoi" => ImageFormat::Qoi,
                 "pcx" => ImageFormat::Pcx,
+                "heif" | "heic" => ImageFormat::Heif,
                 _ => return None,
             })
         }
@@ -188,6 +192,7 @@ impl ImageFormat {
             // See: https://github.com/phoboslab/qoi/issues/167
             "image/x-qoi" => Some(ImageFormat::Qoi),
             "image/vnd.zbrush.pcx" | "image/x-pcx" => Some(ImageFormat::Pcx),
+            "image/heif" | "image/heif-sequence" => Some(ImageFormat::Heif),
             _ => None,
         }
     }
@@ -236,6 +241,7 @@ impl ImageFormat {
             // farbfeld's MIME type taken from https://www.wikidata.org/wiki/Q28206109
             ImageFormat::Farbfeld => "application/octet-stream",
             ImageFormat::Pcx => "image/vnd.zbrush.pcx",
+            ImageFormat::Heif => "image/heif",
         }
     }
 
@@ -261,6 +267,7 @@ impl ImageFormat {
             ImageFormat::Avif => true,
             ImageFormat::Qoi => true,
             ImageFormat::Pcx => true,
+            ImageFormat::Heif => false,
         }
     }
 
@@ -286,6 +293,7 @@ impl ImageFormat {
             ImageFormat::Dds => false,
             ImageFormat::Qoi => true,
             ImageFormat::Pcx => false,
+            ImageFormat::Heif => false,
         }
     }
 
@@ -318,6 +326,7 @@ impl ImageFormat {
             ImageFormat::Avif => &["avif"],
             ImageFormat::Qoi => &["qoi"],
             ImageFormat::Pcx => &["pcx"],
+            ImageFormat::Heif => &["heic", "heif"],
         }
     }
 
@@ -342,6 +351,7 @@ impl ImageFormat {
             ImageFormat::Qoi => cfg!(feature = "qoi"),
             ImageFormat::Pcx => cfg!(feature = "pcx"),
             ImageFormat::Dds => false,
+            ImageFormat::Heif => false,
         }
     }
 
@@ -366,6 +376,7 @@ impl ImageFormat {
             ImageFormat::Hdr => cfg!(feature = "hdr"),
             ImageFormat::Pcx => false,
             ImageFormat::Dds => false,
+            ImageFormat::Heif => false,
         }
     }
 
@@ -388,6 +399,7 @@ impl ImageFormat {
             ImageFormat::Dds,
             ImageFormat::Hdr,
             ImageFormat::Pcx,
+            ImageFormat::Heif,
         ]
         .iter()
         .copied()
